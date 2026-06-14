@@ -45,7 +45,7 @@ fun PostScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("POST - Create Post") },
+                title = { Text("Create Post") },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
