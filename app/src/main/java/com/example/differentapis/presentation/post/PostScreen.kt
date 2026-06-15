@@ -90,7 +90,7 @@ fun PostScreen(
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "Created Post ID: ${createdPost!!.id}",
+                            text = "Post ID: ${createdPost!!.id}",
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(modifier = Modifier.height(4.dp))
