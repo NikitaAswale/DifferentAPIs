@@ -40,6 +40,7 @@ fun PutScreen(
 ) {
     val updatedPost by viewModel.updatedPost.collectAsState()
     var postId by remember { mutableStateOf("") }
+    var id by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
     var body by remember { mutableStateOf("") }
 
@@ -72,6 +73,12 @@ fun PutScreen(
                 modifier = Modifier.fillMaxWidth()
             )
             OutlinedTextField(
+                value = id,
+                onValueChange = { id = it },
+                label = { Text("ID") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            OutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
                 label = { Text("Title") },
@@ -85,7 +92,7 @@ fun PutScreen(
                 minLines = 3
             )
             Button(
-                onClick = { viewModel.updatePost(postId, title, body) },
+                onClick = { viewModel.updatePost(postId, id.toIntOrNull() ?:0 ,title, body) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Update Post")
@@ -101,6 +108,7 @@ fun PutScreen(
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(modifier = Modifier.height(4.dp))
+                        Text(text = "Id: ${updatedPost!!.userId}")
                         Text(text = "Title: ${updatedPost!!.title}")
                         Text(text = "Body: ${updatedPost!!.body}")
                     }
