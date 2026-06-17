@@ -18,10 +18,10 @@ class PostViewModel @Inject constructor(
     private val _createdPost = MutableStateFlow<Post?>(null)
     val createdPost: StateFlow<Post?> = _createdPost
 
-    fun createPost(title: String, body: String) {
+    fun createPost(userId: Int, id: Int, title: String, body: String) {
         viewModelScope.launch {
             try {
-                val post = Post(userId = 1, id = 0, title = title, body = body)
+                val post = Post(userId = userId, id = id, title = title, body = body)
                 _createdPost.value = repository.createPost(post)
             } catch (e: Exception) {
                 // Ignore errors as per user request

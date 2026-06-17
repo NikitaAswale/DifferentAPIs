@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,7 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,6 +37,8 @@ fun PostScreen(
     viewModel: PostViewModel = hiltViewModel()
 ) {
     val createdPost by viewModel.createdPost.collectAsState()
+    var userId by remember { mutableStateOf("") }
+    var id by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
     var body by remember { mutableStateOf("") }
 
@@ -65,6 +65,20 @@ fun PostScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             OutlinedTextField(
+                value = userId,
+                onValueChange = { userId = it },
+                label = { Text("PostID")},
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            OutlinedTextField(
+                value = id,
+                onValueChange = { id = it },
+                label = { Text("ID")},
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            OutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
                 label = { Text("Title") },
@@ -78,7 +92,7 @@ fun PostScreen(
                 minLines = 3
             )
             Button(
-                onClick = { viewModel.createPost(title, body) },
+                onClick = { viewModel.createPost(userId.toIntOrNull() ?: 0, id.toIntOrNull() ?:0  ,title, body) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Create Post")
@@ -90,10 +104,11 @@ fun PostScreen(
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "Post ID: ${createdPost!!.id}",
+                            text = "Post ID: ${createdPost!!.userId}",
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(modifier = Modifier.height(4.dp))
+                        Text(text = "ID: ${createdPost!!.id}")
                         Text(text = "Title: ${createdPost!!.title}")
                         Text(text = "Body: ${createdPost!!.body}")
                     }

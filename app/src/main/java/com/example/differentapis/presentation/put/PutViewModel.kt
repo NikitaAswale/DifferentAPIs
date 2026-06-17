@@ -18,7 +18,7 @@ class PutViewModel @Inject constructor(
     private val _updatedPost = MutableStateFlow<Post?>(null)
     val updatedPost: StateFlow<Post?> = _updatedPost
 
-    fun updatePost(postId: String, title: String, body: String) {
+    fun updatePost(postId: String, id : Int, title: String, body: String) {
         viewModelScope.launch {
             try {
                 val id = postId.toIntOrNull() ?: 0
